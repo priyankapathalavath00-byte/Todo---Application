@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Todo App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Todo List</h1>
+
+    {% if edit_task %}
+    <form action="/update/{{ edit_task.id }}" method="POST">
+        <input
+            type="text"
+            name="content"
+            value="{{ edit_task.content }}"
+            required
+        >
+        <button type="submit">Update Task</button>
+    </form>
+
+    <a href="/">Cancel</a>
+
+    {% else %}
+    <form action="/" method="POST">
+        <input
+            type="text"
+            name="content"
+            placeholder="Enter a task"
+            required
+        >
+        <button type="submit">Add Task</button>
+    </form>
+    {% endif %}
+
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.content }}</td>
+
+            <td>
+                <a href="/update/{{ task.id }}">Edit</a>
+                <a href="/delete/{{ task.id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
